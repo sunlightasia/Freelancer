@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--
+   
+     Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+   
+    Licensed under the EUPL, Version 1.1.
+    You may not use this work except in compliance with the Licence.
+    You may obtain a copy of the Licence at:
+   
+     http://www.osor.eu/eupl
+   
+    Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the Licence for the specific language governing permissions and limitations under the Licence.
+    In case of controversy the competent court is the Court of Cagliari (Italy).
+ -->
+
+<!DOCTYPE validators PUBLIC	"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+  		
+  		
+<validators>
+	<field name="user.name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message>${getText("firstName")} - ${getText("thisFileMandatory")}</message>
+		</field-validator>
+	</field>
+	<field name="user.surname">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message>${getText("lastName")} - ${getText("thisFileMandatory")}</message>
+		</field-validator>
+	</field>
+		<field name="user.email">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message>${getText("email")} - ${getText("thisFileMandatory")}</message>
+		</field-validator>
+	</field>
+		<field name="user.phone">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message>${getText("phone")} - ${getText("thisFileMandatory")}</message>
+		</field-validator>
+	</field>
+	<!-- <field name="disclaimer">
+		<field-validator type="fieldexpression">
+			<param name="expression"><![CDATA[(checkBox !=true && disclaimer!=null) or (checkBox==true && disclaimer==null)]]></param>  
+            <message>${getText("disclaimer")} - ${getText("thisFileMandatory")}</message>
+		</field-validator>
+	</field> -->
+</validators>

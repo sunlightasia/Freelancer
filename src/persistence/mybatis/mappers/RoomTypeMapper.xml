@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.RoomTypeMapper">
+    <cache/>
+	
+
+	<select id="findAll" resultType="model.RoomType">
+        <include refid="selectRoomType"/> 
+    </select>
+    
+
+	<select id="findRoomTypesByIdStructure" parameterType="int" resultType="model.RoomType">
+        <include refid="selectRoomType"/>WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findRoomTypeIdsByIdStructure" parameterType="int" resultType="int">
+        <include refid="selectRoomTypeId"/>WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findRoomTypesByIdStructureAndOffsetAndRownum" parameterType="map" resultType="model.RoomType">
+        <include refid="selectRoomType"/> WHERE id_structure = #{id_structure} LIMIT #{offset}, #{rownum}
+    </select>
+    
+    <select id="findRoomTypeById" parameterType="int" resultType="model.RoomType">
+        <include refid="selectRoomType"/> WHERE id = #{id}
+    </select>
+    
+    <select id="findRoomTypeByIdStructureAndName" parameterType="map" resultType="model.RoomType">
+        <include refid="selectRoomType"/>WHERE id_structure = #{id_structure} AND name = #{name}
+    </select>
+    
+    <select id="search" parameterType="map" resultType="model.RoomType">
+        <include refid="selectRoomType"/> 
+        WHERE 
+        id_structure = #{id_structure}
+        <if test="name != null">
+        AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="maxGuests != null">
+        AND maxGuests LIKE CONCAT('%',#{maxGuests},'%')
+        </if>
+        <if test="notes != null">
+        AND notes LIKE CONCAT('%',#{notes},'%')
+        </if>  
+        LIMIT #{offset}, #{rownum}
+    </select>
+    
+    
+    <select id="findIdStructureByIdRoomType" parameterType="int" resultType="int">
+        select id_structure from roomType where id = #{idRoomType}
+    </select>
+    
+    <sql id="selectRoomType">
+        SELECT id,name,maxGuests,notes,id_structure FROM roomType
+    </sql>
+    
+    <sql id="selectRoomTypeId">
+        SELECT id FROM roomType
+    </sql>
+	
+    <insert id="insertRoomType" parameterType="model.RoomType" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO roomType(name,maxGuests,notes,id_structure) values(#{name},#{maxGuests},#{notes},#{id_structure})
+    </insert>
+    
+    <update id="updateRoomType" parameterType="model.RoomType">
+        UPDATE roomType set name = #{name},maxGuests = #{maxGuests}, notes = #{notes},id_structure = #{id_structure} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteRoomType">
+        DELETE FROM roomType WHERE id = #{id}
+    </delete>
+    
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.StructurePropertyMapper">
+    <cache/>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="map">
+        insert into structureProperty(id_structure,id_property) values(#{id_structure},#{id_property})
+    </insert>  
+         
+    <delete id="delete" parameterType="int">
+        DELETE from structureProperty where id = #{id}
+    </delete>
+        
+    <delete id="deleteByIdStructure" parameterType="int">
+        DELETE from structureProperty where id_structure = #{id_structure}
+    </delete> 
+        
+    <delete id="deleteByIdProperty" parameterType="int">
+        DELETE from structureProperty where id_property = #{id_property}
+    </delete> 
+        
+    <select id="findByIdStructure" parameterType="map" resultType="map">
+        select id, id_structure, id_property from structureProperty where id_structure = #{id_structure} LIMIT #{offset}, #{rownum}
+    </select>
+    
+    <select id="findAll" parameterType="map" resultType="map">
+        select id, id_structure, id_property from structureProperty
+    </select>
+    
+    <select id="findIdByIdStructureAndIdProperty" parameterType="map" resultType="int">
+        select id from structureProperty where id_structure = #{id_structure} AND id_property = #{id_property}
+    </select>
+    
+    <select id="findPropertyIdById" parameterType="map" resultType="int">
+        select id_property from structureProperty where id = #{id}
+    </select>
+</mapper>

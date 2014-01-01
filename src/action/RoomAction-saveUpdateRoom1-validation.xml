@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--
+   
+     Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+   
+    Licensed under the EUPL, Version 1.1.
+    You may not use this work except in compliance with the Licence.
+    You may obtain a copy of the Licence at:
+   
+     http://www.osor.eu/eupl
+   
+    Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the Licence for the specific language governing permissions and limitations under the Licence.
+    In case of controversy the competent court is the Court of Cagliari (Italy).
+ -->
+
+<!DOCTYPE validators PUBLIC	"-//OpenSymphony Group//XWork Validator 1.0//EN" 
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+  		
+  		
+<validators>
+	<field name="room.name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+            <message><![CDATA[room name required  ]]></message>
+		</field-validator>
+	</field>
+	<field name="room.roomType">
+		<field-validator type="required">
+			<param name="trim">true</param>
+            <message><![CDATA[room type required ]]></message>
+		</field-validator>
+	</field>
+	<field name="room.maxGuests">
+		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">10</param>
+			<message><![CDATA[room.maxGuests must be integer min 1  ]]></message>
+		</field-validator>
+	</field>
+</validators>

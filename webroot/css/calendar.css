@@ -1,0 +1,77 @@
+body {
+font-family:"Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+}
+
+h2 {
+font-size:1.4em;
+margin:.5em 0;
+}
+
+p {
+margin:.5em;
+}
+
+.ui-widget {
+font-size:1em;
+margin-top:16px;
+}
+
+#event_edit_container,#about {
+display:none;
+text-align:left;
+}
+
+#event_edit_container form ul li div label {
+display:inline;
+}
+
+event_edit_container
+#about_button_container {
+position:absolute;
+top:1em;
+right:1em;
+background:#ddf;
+border:1px solid #bbd;
+width:10em;
+text-align:center;
+padding:.5em 2em;
+}
+
+label {
+display:block;
+margin-top:0;
+margin-bottom:0;
+}
+
+form ul {
+text-align:left;
+padding:.3em;
+}
+
+select,input[type='text'],textarea {
+width:80%;
+padding:3px;
+}
+
+ul.formatted,ol.formatted {
+display:block;
+margin:1em .5em;
+}
+
+ul.formatted li,ol.formatted li {
+display:auto;
+margin:5px 30px;
+}
+
+ul.formatted li {
+list-style-type:disc;
+}
+
+ol.formatted li {
+list-style-type:decimal;
+}
+
+#room_name_dialog {
+font-size:15px;
+color:#360;
+}

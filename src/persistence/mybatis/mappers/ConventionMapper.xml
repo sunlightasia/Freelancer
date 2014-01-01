@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.ConventionMapper">
+    
+    <insert id="insertConvention" parameterType="model.listini.Convention" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO convention(name,description,activationCode,id_structure) values (#{name},#{description},#{activationCode},#{id_structure})
+    </insert>
+    
+    <update id="updateConvention" parameterType="model.listini.Convention">
+        UPDATE convention set name = #{name},description = #{description},activationCode = #{activationCode},id_structure = #{id_structure} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteConvention" parameterType="int">
+        DELETE FROM convention WHERE id = #{id}
+    </delete>
+    
+    <select id="findAll" resultType="model.listini.Convention">
+        <include refid="selectConvention"/> 
+    </select>
+    
+    <select id="findConventionsByIdStructure" parameterType="int" resultType="model.listini.Convention">
+        <include refid="selectConvention"/>WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findConventionsByIdStructureWithoutDefault" parameterType="int" resultType="model.listini.Convention">
+        <include refid="selectConvention"/>WHERE id_structure = #{id_structure} AND activationCode != 'thisconventionshouldntneverberemoved'
+    </select>
+     
+    <select id="findConventionById" parameterType="int" resultType="model.listini.Convention">
+        <include refid="selectConvention"/>WHERE id = #{id} 
+    </select>
+    
+     <select id="findConventionByIdWithoutDefault" parameterType="int" resultType="model.listini.Convention">
+        <include refid="selectConvention"/>WHERE id = #{id} AND activationCode != 'thisconventionshouldntneverberemoved'
+    </select>
+    
+    <sql id="selectConvention">
+        SELECT id,name,description,activationCode,id_structure FROM convention
+    </sql>
+    
+</mapper>

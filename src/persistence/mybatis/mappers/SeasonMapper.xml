@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.SeasonMapper">
+    <cache/>
+    
+    <select id="findAll" resultType="model.listini.Season">
+        <include refid="selectSeason"/> 
+    </select>
+  
+    <select id="findSeasonsByStructureId" parameterType="int" resultType="model.listini.Season">
+        <include refid="selectSeason"/> WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findSeasonById" parameterType="int" resultType="model.listini.Season">
+        <include refid="selectSeason"/> WHERE id = #{id}
+    </select>
+    
+    <select id="findSeasonByName" parameterType="map" resultType="model.listini.Season">
+        <include refid="selectSeason"/> WHERE name = #{name} AND id_structure = #{id_structure}
+    </select>
+    
+    <select id="findSeasonsByYear" parameterType="map" resultType="model.listini.Season">
+        <include refid="selectSeason"/> WHERE year = #{year} AND id_structure = #{id_structure}
+    </select>
+    
+    <sql id="selectSeason">
+        SELECT id,name,year,id_structure FROM season
+    </sql>
+    
+    <!-- 
+    <sql id="selectSeasonWithPeriodsUsingJoin">
+        select s.id as season_id, s.name as season_name, s.year as season_year, s.id_structure as season_id_structure,
+        p.id as period_id, p.startDate as period_startDate, p.endDate as period_endDate, p.id_season as period_id_season
+        from season s left outer join period p on s.id = p.id_season
+    </sql>
+    
+    <resultMap id="seasonWithPeriodsUsingJoin" type="model.listini.Season">
+        <id property="id" column="season_id"/>
+        <result property="name" column="season_name"/>
+        <result property="year" column="season_year"/>
+        <result property="id_structure" column="season_id_structure"/>
+        <collection property="periods" resultMap="period"/>
+    </resultMap>
+    
+    <resultMap id="period" type="model.listini.Period">
+        <id property="id" column="period_id"/>
+        <result property="startDate" column="period_startDate"/>
+        <result property="endDate" column="period_endDate"/>
+        <result property="id_season" column="period_id_season"/>
+    </resultMap> 
+    -->
+    
+    <insert id="insertSeason" parameterType="model.listini.Season" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO season(name,year,id_structure) VALUES (#{name},#{year},#{id_structure})
+    </insert>
+   
+    <update id="updateSeason" parameterType="model.listini.Season">
+        UPDATE season SET name = #{name}, year = #{year}, id_structure = #{id_structure} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteSeason" parameterType="int">
+        DELETE FROM season WHERE id = #{id}
+    </delete>
+
+</mapper>

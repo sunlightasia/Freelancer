@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.PropertyTypeMapper">
+    <cache/>
+
+	<select id="findAll" resultType="model.PropertyType">
+        <include refid="selectProperty"/> 
+    </select>
+
+	<select id="findPropertysByIdStructure" parameterType="int" resultType="model.PropertyType">
+        <include refid="selectProperty"/>WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findPropertyIdsByIdStructure" parameterType="int" resultType="int">
+        <include refid="selectPropertyId"/>WHERE id_structure = #{id_structure}
+    </select>
+    
+    <select id="findPropertysByIdStructureAndOffsetAndRownum" parameterType="map" resultType="model.PropertyType">
+        <include refid="selectProperty"/> WHERE id_structure = #{id_structure} LIMIT #{offset}, #{rownum}
+    </select>
+    
+    <select id="findPropertyById" parameterType="int" resultType="model.PropertyType">
+        <include refid="selectProperty"/> WHERE id = #{id}
+    </select>
+    
+    <select id="findPropertyByIdStructureAndName" parameterType="map" resultType="model.PropertyType">
+        <include refid="selectProperty"/>WHERE id_structure = #{id_structure} AND name = #{name}
+    </select>
+    
+    <select id="search" parameterType="map" resultType="model.PropertyType">
+        <include refid="selectProperty"/> 
+        WHERE 
+        id_structure = #{id_structure}
+        <if test="name != null">
+        AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        LIMIT #{offset}, #{rownum}
+    </select>
+    
+    
+    <select id="findIdStructureByIdProperty" parameterType="int" resultType="int">
+        select id_structure from propertytype where id = #{idProperty}
+    </select>
+    
+    <sql id="selectProperty">
+        SELECT id,name FROM propertytype
+    </sql>
+    
+    <sql id="selectPropertyId">
+        SELECT id FROM propertytype
+    </sql>
+	
+    <insert id="insertProperty" parameterType="model.PropertyType" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO propertytype(name) values(#{name})
+    </insert>
+    
+    <update id="updateProperty" parameterType="model.PropertyType">
+        UPDATE propertytype set name = #{name} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteProperty">
+        DELETE FROM propertytype WHERE id = #{id}
+    </delete>
+</mapper>

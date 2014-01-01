@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2011 - Sardegna Ricerche, Distretto ICT, Pula, Italy
+
+Licensed under the EUPL, Version 1.1.
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+http://www.osor.eu/eupl
+
+Unless required by applicable law or agreed to in  writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+In case of controversy the competent court is the Court of Cagliari (Italy).
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatis.mappers.FacilityMapper">
+    <cache/>
+    
+    <insert id="insert" parameterType="model.Facility" useGeneratedKeys="true" keyProperty="id">
+        INSERT into facility(name,description,id_structure) values (#{name},#{description},#{id_structure})
+    </insert>
+    	   
+    <update id="update" parameterType="model.Facility" >
+        UPDATE facility set name = #{name},description = #{description} where id = #{id}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+        DELETE from facility where id = #{id} 
+    </delete>  
+    
+    <select id="findAll"  resultType="model.Facility">
+        <include refid="findFacility"/>      
+    </select>
+    
+    <select id="find" parameterType="int" resultType="model.Facility">
+        <include refid="findFacility"/> where id = #{id}        
+    </select>   
+    
+    <select id="findByIdStructure" parameterType="map" resultType="model.Facility">
+        <include refid="findFacility"/> where id_structure = #{id_structure} LIMIT #{offset}, #{rownum}       
+    </select>    
+    
+    <sql id="findFacility">
+        SELECT id,name,description,id_structure from facility
+    </sql>   
+        
+</mapper>
